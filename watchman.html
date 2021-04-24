@@ -13,10 +13,28 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
-      .color {
+       .color {
         text-align: center;
         background-color: cornflowerblue;
-        margin-bottom: 1%;
+        margin-bottom: 5%;
+      }
+      h1 {
+        text-align: center;
+      }
+      form {
+        margin-left: 2%;
+        margin-right: 2%;
+      }
+      .forms{
+        margin-left: 20%;
+        margin-right: 20%;
+        box-shadow: 10px 10px 5px grey;
+        padding: 15px;
+        border-style: solid;
+      }
+      h5 {
+        text-align: center;
+        padding-top: 2%;
       }
       </style>
       <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -42,7 +60,31 @@
   firebase.analytics();
   </script>
     <h1 class="color">Socity Monitor</h1>
-    dfdfgdgfdgfdgfdgfd
+    <div class="forms">
+      <h1>NEW ENTRY</h1>
+      <form>
+        <div class="form-group">
+          <button class="btn btn-primary">Add Face</button>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name of Visitor" required>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1" class="form-label">Reason</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Select User</label>
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option value="Watchman">Watchman</option>
+            <option value="User" selected>User</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="save()">Submit</button>
+      </form>
+      <br>
+      </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
