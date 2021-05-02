@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+      body{
+        background-color:#e3e3e3 ;
+        font-family: "Times New Roman", Times, serif;
+      }
+       .color {
+        text-align: center;
+        background-color: #4BB543;
+        margin-bottom: 5%;
+
+      }
+      h1 {
+        text-align: center;
+        color: #fff;
+          font-family: "Times New Roman", Times, serif;
+          
+      }
+      form {
+        margin-left: 2%;
+        margin-right: 2%;
+      }
+      .forms{
+        margin-left: 20%;
+        margin-right: 20%;
+        box-shadow: 0px 5px 5px grey;
+        padding: 15px;
+        background-color: #fff;
+     }
+      h5 {
+        text-align: center;
+        padding-top: 2%;
+      }
+      .btn{
+        
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+     
+      /* camera access button*/
+    #video {
+        border: 1px solid black;
+        width: 180px;
+        height: 180px;
+    }
+
+    #photo {
+        border: 1px solid black;
+        width: 180px;
+        height: 180px;
+    }
+
+    #canvas {
+        display: none;
+    }
+
+    .camera {
+        width: 180px;
+        display: inline-block;
+    }
+
+    .output {
+        width: 200px;
+        display: inline-block;
+    }
+
+    #startbutton {
+        font-family: "Times New Roman", Times, serif;
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 36px;
+        padding: 5px;
+        /*background-color: green;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        color: rgba(255, 255, 255, 1.0);*/
+        cursor: pointer;
+    }
+
+    .contentarea {
+        font-size: 16px;
+        font-family: Arial;
+        text-align: center;
+    }
+      </style>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <title>Socity Monitor</title>
+  </head>
+  <body>
+
+
+  <script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyDj3vYaxIua6SEBCXU3EBkd0k8gVzsf248",
+    authDomain: "somesh-84c77.firebaseapp.com",
+    databaseURL: "https://somesh-84c77.firebaseio.com",
+    projectId: "somesh-84c77",
+    storageBucket: "somesh-84c77.appspot.com",
+    messagingSenderId: "783259032848",
+    appId: "1:783259032848:web:68b9f1fd28740a5d429995",
+    measurementId: "G-XY6PEP2QZ1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  </script>
+  
+
+    <script>
+    /* JS comes here */
+    (function() {
+
+        var width = 180; // We will scale the photo width to this
+        var height = 0; // This will be computed based on the input stream
+
+        var streaming = false;
+
+        var video = null;
+        var canvas = null;
+        var photo = null;
+        var startbutton = null;
+
+        function startup() {
+            video = document.getElementById('video');
+            canvas = document.getElementById('canvas');
+            photo = document.getElementById('photo');
+            startbutton = document.getElementById('startbutton');
+
+            navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function(err) {
+                    console.log("An error occurred: " + err);
+                });
+
+            video.addEventListener('canplay', function(ev) {
+                if (!streaming) {
+                    height = video.videoHeight / (video.videoWidth / width);
+
+                    if (isNaN(height)) {
+                        height = width / (4 / 3);
+                    }
+
+                    video.setAttribute('width', width);
+                    video.setAttribute('height', height);
+                    canvas.setAttribute('width', width);
+                    canvas.setAttribute('height', height);
+                    streaming = true;
+                }
+            }, false);
+
+            startbutton.addEventListener('click', function(ev) {
+                takepicture();
+                ev.preventDefault();
+            }, false);
+
+            clearphoto();
+        }
+
+
+        function clearphoto() {
+            var context = canvas.getContext('2d');
+            context.fillStyle = "#AAA";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            var data = canvas.toDataURL('image/png');
+            photo.setAttribute('src', data);
+        }
+
+        function takepicture() {
+            var context = canvas.getContext('2d');
+            if (width && height) {
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video, 0, 0, width, height);
+
+                var data = canvas.toDataURL('image/png');
+                photo.setAttribute('src', data);
+            } else {
+                clearphoto();
+            }
+        }
+
+        window.addEventListener('load', startup, false);
+    })();
+
+    </script>
+    
+
+  
+  <!--heading-->
+    <h1 class="color">Socity Monitor</h1>
+     <div class="forms">
+      <h1></h1>
+      
+    
+    <!-- Main div code-->
+  
+    <!--user form-->
+    <form>
+        
+        <div class="form-group">
+          
+          <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name of Visitor" required>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" placeholder="Reason" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option value="Watchman">Watchman</option>
+            <option value="User" selected>User</option>
+          </select>
+        </div>
+        
+        <!--camera access-->
+        <div class="contentarea">
+        <div class="camera">
+            <video id="video">Video stream not available.</video>
+        </div>
+        <div><button class="btn btn-success" id="startbutton">Take photo</button></div>
+        <canvas id="canvas"></canvas>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box.">
+        </div>
+        </div>
+        <br>
+       <!--button-->
+        <div class="form-group">
+          <button class="btn btn-success">Send</button>
+        </div>
+
+   
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
