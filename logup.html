@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+      body{
+        background-color:#e3e3e3 ;
+        font-family: "Times New Roman", Times, serif;
+      }
+       .color {
+        text-align: center;
+        background-color: #4BB543;
+        margin-bottom: 5%;
+
+      }
+      h1 {
+        text-align: center;
+        color: #fff;
+          font-family: "Times New Roman", Times, serif;
+          
+      }
+      h4 {
+        text-align: center;
+        color: #000;
+          font-family: "Times New Roman", Times, serif;
+          
+      }
+      form {
+        margin-left: 2%;
+        margin-right: 2%;
+      }
+      .forms{
+        margin-left: 20%;
+        margin-right: 20%;
+        box-shadow: 0px 5px 5px grey;
+        padding: 15px;
+        background-color: #fff;
+     }
+      h5 {
+        text-align: center;
+        padding-top: 2%;
+        color:  #4BB543;
+      }
+  
+      </style>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <title>Socity Monitor</title>
+  </head>
+  <body>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDj3vYaxIua6SEBCXU3EBkd0k8gVzsf248",
+      authDomain: "somesh-84c77.firebaseapp.com",
+      databaseURL: "https://somesh-84c77.firebaseio.com",
+      projectId: "somesh-84c77",
+      storageBucket: "somesh-84c77.appspot.com",
+      messagingSenderId: "783259032848",
+      appId: "1:783259032848:web:68b9f1fd28740a5d429995",
+      measurementId: "G-XY6PEP2QZ1"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    const database = firebase.database();
+    const ref = database.ref('users');
+    console.log(ref);
+    function save() {
+      const data = {
+        Email: document.getElementById('exampleInputEmail1').value,
+        password: document.getElementById('exampleInputPassword1').value,
+        role: document.getElementById('exampleFormControlSelect1').value,
+       }
+       ref.push(data);
+      }
+    </script>
+    <h1 class="color">Socity Monitor</h1>
+    <div class="forms">
+    <h4>Log UP</h4>
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Example select</label>
+        <select class="form-control" id="exampleFormControlSelect1">
+          <option value="Watchman">Watchman</option>
+          <option value="User" selected>User</option>
+        </select>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-success" onclick="save()">Submit</button>
+    </form>
+    <br>
+    </div>
+    <a href="./index.html"><h5>Are you from here plz Log In</h5></a>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
+  </body>
+</html>
