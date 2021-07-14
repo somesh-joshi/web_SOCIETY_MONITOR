@@ -53,34 +53,6 @@
       <script src="js/jquery-3.2.1.min.js"></script>
       <link href="firebase-messaging-sw.js">
 <link rel="manifest" href="manifest.json">
-<script>
-  // Initialize Firebase
-  /*Update this config*/
-  var config = {
-    apiKey: "AIzaSyDj3vYaxIua6SEBCXU3EBkd0k8gVzsf248",
-  authDomain: "somesh-84c77.firebaseapp.com",
-  databaseURL: "https://somesh-84c77.firebaseio.com",
-  projectId: "somesh-84c77",
-  storageBucket: "somesh-84c77.appspot.com",
-  messagingSenderId: "783259032848",
-  appId: "1:783259032848:web:68b9f1fd28740a5d429995",
-  measurementId: "G-XY6PEP2QZ1"
-  };
-  firebase.initializeApp(config);
-	// Retrieve Firebase Messaging object.
-	const messaging = firebase.messaging();
-	messaging.requestPermission()
-  .then(function() {
-    console.log("Have the permition");
-    return messaging.getToken();
-  })
-	.then(function(token) {
-    console.log(token);
-  })
-  .catch(function(error){
-   
-  })
-      </script>
     <title>Socity Monitor</title>
   </head>
   <body>
