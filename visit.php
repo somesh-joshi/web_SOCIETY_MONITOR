@@ -4,6 +4,7 @@
 
     date_default_timezone_set('Asia/Kolkata');
 
+    $Email = $_SESSION("Email")
     $Name = $_POST['exampleInputName1'];
     $Reason = $_POST['exampleFormControlTextarea1'];
     $Userid = $_POST['exampleFormControlSelect1'];
@@ -19,6 +20,7 @@
     else
     {
         echo "VISITOR IS INSERTED";
+        mail("$Email","NEW VISITOR","There is New Visitor at your boorstep.");
     }
     header("refresh:2; url=watchman.php");
 
