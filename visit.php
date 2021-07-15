@@ -20,7 +20,7 @@
     else
     {
         echo "VISITOR IS INSERTED";
-        mail("$Email","NEW VISITOR","There is New Visitor at your boorstep.");
+        mail("$Email","NEW VISITOR","There is New Visitor at your doorstep.");
     }
     header("refresh:2; url=watchman.php");
 
